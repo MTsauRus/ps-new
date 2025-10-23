@@ -8,12 +8,8 @@ for t in range(1, T+1):
         score.append(a)
         cal.append(b)
     
-    D = [[0 for _ in range(cal_max+1)] for _ in range(N+1)]
-    for i in range(1, N+1):
-        for w in range(1, cal_max+1):
-            if cal[i] > w: 
-                D[i][w] = D[i-1][w]
-            else:
-                D[i][w] = max(D[i-1][w], D[i-1][w-cal[i]] + score[i])
-    
-    print(f"#{t} {D[N][cal_max]}")
+    D = [0 for _ in range(cal_max+1)]
+    for i in range(1, N+1, 1):
+        for w in range(cal_max, cal[i]-1, -1):
+            D[w] = max(D[w], D[w-cal[i]] + score[i])            
+    print(f"#{t} {D[cal_max]}")
