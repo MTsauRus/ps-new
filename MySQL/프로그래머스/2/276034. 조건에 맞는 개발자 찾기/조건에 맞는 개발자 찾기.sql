@@ -1,6 +1,11 @@
-select distinct d.id, d.email, d.first_name, d.last_name
-from developers d
-join skillcodes s
-on (d.skill_code & s.code) = s.code
-where (d.skill_code & s.code) in (256, 1024)
-order by d.id;
+select 
+    id, 
+    email, 
+    first_name, 
+    last_name
+from developers
+where
+    skill_code & (select code from skillcodes where name = 'C#') > 0
+    or
+    skill_code & (select code from skillcodes where name = 'python') > 0
+order by id;
