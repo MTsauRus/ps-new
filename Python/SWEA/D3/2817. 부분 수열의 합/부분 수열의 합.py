@@ -3,27 +3,25 @@
 
 T = int(input())
 
-def dfs(idx, use, res):
+def dfs(idx, res):
     global ans
     
-    if res > K:
+    if res == K:
+        ans += 1
+        return
+    
+    elif res > K:
         return
     
     if idx == N:
         return
     
-    if use:
-        res += nums[idx]
-        if res == K:
-            ans += 1
+    dfs(idx+1, res)
+    dfs(idx+1, res+nums[idx])
     
-    dfs(idx+1, True, res)
-    dfs(idx+1, False, res)
-
 for t in range(1, T+1):
     N, K = map(int, input().split())
-    nums = sorted(list(map(int, input().split())))
+    nums = list(map(int, input().split()))
     ans = 0
-    dfs(0, True, 0)
-    dfs(0, False, 0)
+    dfs(0, 0)
     print(f'#{t} {ans}')
