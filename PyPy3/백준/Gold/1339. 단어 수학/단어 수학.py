@@ -1,41 +1,29 @@
 ### 1339. 단어 수학 (G4)
-### 백트래킹?
+### 그리디
 import sys
 input = sys.stdin.readline
 
 N = int(input())
-voca = []
+words = []
 ch_set = set()
-
 for _ in range(N):
-    next = list(input().strip())
-    voca.append(next)
-    for ch in next:
+    word = list(input().strip())
+    words.append(word)
+    for ch in word:
         ch_set.add(ch)
         
 ch_list = list(ch_set)
-visited = [False for _ in range(10)]
-ans = 0
 ch_weight = [0 for _ in range(len(ch_list))]
-for next in voca:
+
+for word in words:
     mult = 1
-    for i in range(len(next)-1, -1, -1):
-        ch_weight[ch_list.index(next[i])] += mult
+    for i in range(len(word)-1, -1, -1):
+        ch_weight[ch_list.index(word[i])] += mult
         mult *= 10
-    
+        
+ch_weight.sort(key = lambda x : -x)
 
-def ch_sort(depth, tot):
-    global ans
-    
-    if depth == len(ch_list):
-        ans = max(ans, tot)
-        return
-    
-    for i in range(9, 9-len(ch_list), -1):
-        if not visited[i]:
-            visited[i] = True
-            ch_sort(depth + 1, tot + (ch_weight[depth]) * i)
-            visited[i] = False
-
-ch_sort(0, 0)
+ans = 0
+for i, w in enumerate(ch_weight):
+    ans += w * (9 - i)
 print(ans)
