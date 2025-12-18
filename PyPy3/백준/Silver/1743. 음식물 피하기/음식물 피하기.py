@@ -32,7 +32,7 @@ def bfs(r, c):
 
 for i in range(R):
     for j in range(C):
-        if G[i][j] == 1:
+        if G[i][j] == 1 and not visited[i][j]:
             ans = max(ans, bfs(i, j))
 
 print(ans)
